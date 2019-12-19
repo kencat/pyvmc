@@ -2,6 +2,7 @@
 #electrons={e1:{1,1,1}}
 #r=nucleus[H][2]
 #python3
+import numpy as np
 
 e=1.6e-19                        #C
 epsilon_0=8.854187812813e-12 #F*(m**−1)
@@ -33,3 +34,21 @@ e_1=electron()
 
 r=((H.x-e_1.x)**2+(H.y-e_1.y)**2+(H.z-e_1.z)**2)**0.5
 print("r:",r,"V:",V(r))
+
+minx=-5
+maxx=5
+num=1000
+step=(maxx-minx)/num
+x = np.linspace(minx,maxx,num)
+r = abs(x)
+
+class phi: #orbitals
+  def __init__(self,r):
+    self.r=r
+    self.a=1.0 #Bohr radius
+    self.A=(1/((self.a)**3)*pi)**(0.5)
+    self.psi=self.A*np.exp(-(r/self.a))
+
+
+e_STO=phi(r).psi.sum()/num
+print("e_STO:", e_STO)
